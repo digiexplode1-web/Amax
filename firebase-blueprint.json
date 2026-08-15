@@ -1,0 +1,103 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "Product item for Amax Crafts e-commerce",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "number" },
+        "originalPrice": { "type": "number" },
+        "category": { "type": "string" },
+        "categoryId": { "type": "string" },
+        "images": { "type": "array" },
+        "imageUrl": { "type": "string" },
+        "material": { "type": "string" },
+        "dimensions": { "type": "string" },
+        "thickness": { "type": "string" },
+        "isActive": { "type": "boolean" },
+        "isFeatured": { "type": "boolean" },
+        "isNewArrival": { "type": "boolean" },
+        "isWeddingEssential": { "type": "boolean" },
+        "stock": { "type": "number" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["name", "price", "category", "isActive"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Product categories e.g. CNC Room Dividers, Railing Strips",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "slug": { "type": "string" },
+        "description": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "order": { "type": "number" }
+      },
+      "required": ["name", "slug"]
+    },
+    "Banner": {
+      "title": "Banner",
+      "description": "Hero section banners and promotional images",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "link": { "type": "string" },
+        "isActive": { "type": "boolean" }
+      }
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer purchase orders",
+      "type": "object",
+      "properties": {
+        "customerName": { "type": "string" },
+        "customerEmail": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "address": { "type": "string" },
+        "items": { "type": "array" },
+        "total": { "type": "number" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "products/{productId}": {
+      "schema": "Product",
+      "description": "Store products"
+    },
+    "categories/{categoryId}": {
+      "schema": "Category",
+      "description": "Product categories"
+    },
+    "banners/{bannerId}": {
+      "schema": "Banner",
+      "description": "Hero banners"
+    },
+    "settings/store": {
+      "schema": { "$ref": "#/entities/Category" },
+      "description": "Global store settings"
+    },
+    "users/{uid}": {
+      "schema": { "$ref": "#/entities/Category" },
+      "description": "User profile documents"
+    },
+    "orders/{orderId}": {
+      "schema": "Order",
+      "description": "Orders collection"
+    },
+    "coupons/{couponId}": {
+      "schema": { "$ref": "#/entities/Category" },
+      "description": "Discount coupons"
+    },
+    "pages/{pageId}": {
+      "schema": { "$ref": "#/entities/Category" },
+      "description": "CMS custom pages"
+    }
+  }
+}

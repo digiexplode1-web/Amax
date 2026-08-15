@@ -1,0 +1,6 @@
+{
+  "name": "Amax Crafts",
+  "description": "Custom CNC Laser Cutting Jalis, Room Dividers, Railing Strips & Handmade Crafts",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
