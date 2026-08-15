@@ -72,7 +72,9 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => (
 );
 
 export default function App() {
-  const [showSplash, setShowSplash] = React.useState(true);
+  const [showSplash, setShowSplash] = React.useState(() => {
+    return typeof window !== 'undefined' && window.innerWidth < 768;
+  });
 
   return (
     <ErrorBoundary>

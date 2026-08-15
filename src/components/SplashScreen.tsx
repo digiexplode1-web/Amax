@@ -5,14 +5,15 @@ export const SplashScreen: React.FC<{ onComplete?: () => void }> = ({ onComplete
   const [mounted, setMounted] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
 
-  const handleFinish = () => {
-    setFadeOut(true);
-    setTimeout(() => {
-      if (onComplete) onComplete();
-    }, 400);
-  };
+  // Check if desktop screen (width >= 768px)
+  const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 768;
 
   useEffect(() => {
+    if (isDesktop) {
+      if (onComplete) onComplete();
+      return;
+    }
+
     const mountTimer = setTimeout(() => setMounted(true), 50);
 
     // 3-second progress fill animation (30ms x 100 = 3000ms = 3.0s)
@@ -31,17 +32,28 @@ export const SplashScreen: React.FC<{ onComplete?: () => void }> = ({ onComplete
       clearTimeout(mountTimer);
       clearInterval(interval);
     };
-  }, []);
+  }, [isDesktop]);
+
+  const handleFinish = () => {
+    setFadeOut(true);
+    setTimeout(() => {
+      if (onComplete) onComplete();
+    }, 400);
+  };
 
   const handleClickToSkip = () => {
     setProgress(100);
     handleFinish();
   };
 
+  if (isDesktop) {
+    return null;
+  }
+
   return (
     <div
       onClick={handleClickToSkip}
-      className={`fixed inset-0 z-[9999] w-screen h-screen bg-[#0D0B0A] text-white flex flex-col items-center justify-between transition-opacity duration-400 select-none cursor-pointer overflow-hidden ${
+      className={`fixed inset-0 z-[9999] w-screen h-screen bg-[#0D0B0A] text-white md:hidden flex flex-col items-center justify-between transition-opacity duration-400 select-none cursor-pointer overflow-hidden ${
         fadeOut ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
       title="Tap to skip"
