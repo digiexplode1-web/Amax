@@ -28,11 +28,15 @@ export const AdminLayout: React.FC = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  const handleLogout = async () => {
-    if (window.confirm('Are you sure you want to log out of the admin panel?')) {
+  const handleLogout = async (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    setUserMenuOpen(false);
+    try {
       await logout();
-      navigate('/', { replace: true });
+    } catch (err) {
+      console.warn("Logout error:", err);
     }
+    navigate('/admin/login', { replace: true });
   };
 
   const navigation = [
@@ -190,7 +194,6 @@ export const AdminLayout: React.FC = () => {
               {userMenuOpen && (
                 <div 
                   className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-[#F4E3DD] py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
-                  onClick={() => setUserMenuOpen(false)}
                 >
                   <div className="px-4 py-2 border-b border-[#F4E3DD]">
                     <p className="text-xs font-bold text-[#25201E]">Logged in as</p>
